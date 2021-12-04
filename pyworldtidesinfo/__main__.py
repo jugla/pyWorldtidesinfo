@@ -16,7 +16,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-k", "--key", required=True, help="WorldidesInfo Key")
     parser.add_argument("-l", "--lat", required=True, help="latitude")
-    parser.add_argument("-L", "--long", required=True, help="logitude")
+    parser.add_argument("-L", "--long", required=True, help="longitude")
 
     args = parser.parse_args()
 

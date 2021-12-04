@@ -402,7 +402,7 @@ class give_info_from_raw_data:
         for height_index in range(len(self._data["heights"])):
             height_current_value = self._data["heights"][height_index]["height"]
             height_current_time = self._data["heights"][height_index]["dt"]
-            # retrive height and time
+            # retrieve height and time
             if (height_current_time > epoch_frame_min) and (
                 height_current_time < epoch_frame_max
             ):
