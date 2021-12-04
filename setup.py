@@ -16,5 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(include=["pyworldtidesinfo"]),
     setup_requires=["requests", "setuptools"],
     install_requires=["requests"],
-    entry_points={"console_scripts": ["pyworldtidesinfo = pyworldtidesinfo.__main__:main"]},
+    entry_points={
+        "console_scripts": ["pyworldtidesinfo = pyworldtidesinfo.__main__:main"]
+    },
 )

@@ -11,6 +11,19 @@ from pyworltidesinfo.worldtidesinfo_server import (
     give_info_from_raw_data,
 )
 
+def next_tide_state(tide_info, current_time):
+    """Compute next tide state"""
+    # Get next tide time
+    next_tide = tide_info.give_next_tide_in_epoch(current_time)
+    if next_tide.get("error") == None:
+        tidetime = time.strftime("%H:%M", time.localtime(next_tide.get("tide_time")))
+        tidetype = next_tide.get("tide_type")
+        tide_string = f"{tidetype} tide at {tidetime}"
+        return tide_string
+    else:
+        return None
+
+
 def main():
     """Define the main function."""
     parser = argparse.ArgumentParser()
@@ -20,49 +33,47 @@ def main():
 
     args = parser.parse_args()
 
-    #Least Astronomic Tide
-    vertical_ref="LAT"
-    #20km
+    # Least Astronomic Tide
+    vertical_ref = "LAT"
+    # 20km
     server_tide_station_distance = 20
     plot_color = "2,102,255"
     plot_background = "255,255,255"
     unit_curve_picture = PLOT_CURVE_UNIT_FT
 
     worldtidesinfo_server = WorldTidesInfo_server(
-            args.key,
-            args.lat,
-            args.lon,
-            vertical_ref,
-            server_tide_station_distance,
-            plot_color,
-            plot_background,
-            unit_curve_picture,
+        args.key,
+        args.lat,
+        args.lon,
+        vertical_ref,
+        server_tide_station_distance,
+        plot_color,
+        plot_background,
+        unit_curve_picture,
     )
     worldtidesinfo_server_parameter = worldtidesinfo_server.give_parameter()
 
     if worldtidesinfo_server.retrieve_tide_station():
         init_data = worldtidesinfo_server.retrieve_tide_station_raw_data()
-    #retrieve the datum
+    # retrieve the datum
     datum_flag = True
-    if self._worldtidesinfo_server.retrieve_tide_height_over_one_day(datum_flag):
-        data = self._worldtidesinfo_server.retrieve_tide_raw_data()
+    if worldtidesinfo_server.retrieve_tide_height_over_one_day(datum_flag):
+        data = worldtidesinfo_server.retrieve_tide_raw_data()
         # process information
         tide_info = give_info_from_raw_data(data)
         datum_content = tide_info.give_datum()
 
-    if (init_data is not None
-    and data is not None
-    and datum_content is not None):
-       init_tide_info = give_info_from_raw_data(init_data)
-       tide_info = give_info_from_raw_data(data)
+    if init_data is not None and data is not None and datum_content is not None:
+        init_tide_info = give_info_from_raw_data(init_data)
+        tide_info = give_info_from_raw_data(data)
 
-       current_time = time.time()
-       current_height_value = tide_info.give_current_height_in_UTC(current_time)
-       print ("current height %s" , current_height_value.get("current_height"))
-       print ("next tide %s", next_tide_state(tide_info, current_time))
+        current_time = time.time()
+        current_height_value = tide_info.give_current_height_in_UTC(current_time)
+        print ("current height %s" , current_height_value.get("current_height"))
+        print ("next tide %s", next_tide_state(tide_info, current_time))
     else:
-       print ("no data")
-       return 1
+        print ("no data")
+        return 1
 
 
 if __name__ == "__main__":
