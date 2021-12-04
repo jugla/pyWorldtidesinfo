@@ -11,6 +11,7 @@ from pyworltidesinfo.worldtidesinfo_server import (
     give_info_from_raw_data,
 )
 
+
 def next_tide_state(tide_info, current_time):
     """Compute next tide state"""
     # Get next tide time
@@ -69,10 +70,10 @@ def main():
 
         current_time = time.time()
         current_height_value = tide_info.give_current_height_in_UTC(current_time)
-        print ("current height %s" , current_height_value.get("current_height"))
-        print ("next tide %s", next_tide_state(tide_info, current_time))
+        print("current height %s" , current_height_value.get("current_height"))
+        print("next tide %s", next_tide_state(tide_info, current_time))
     else:
-        print ("no data")
+        print("no data")
         return 1
 
 
