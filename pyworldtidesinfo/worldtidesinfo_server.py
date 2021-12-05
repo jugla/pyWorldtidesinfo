@@ -104,8 +104,7 @@ class WorldTidesInfo_server:
         plot_background,
         unit_curve_picture,
     ):
-        """Initialisation of parameter."""
-
+        """Initialize the parameters."""
         # parameter
         self._Server_Parameter = Server_Parameter(
             key,
@@ -272,8 +271,7 @@ class give_info_from_raw_data:
 
     def give_tide_in_epoch(self, current_epoch_time, next_tide_flag):
         """Give Tide info from X seconds from epoch."""
-
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
 
         current_time = int(current_epoch_time)
