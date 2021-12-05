@@ -529,7 +529,7 @@ class give_info_from_raw_data:
         elif "plot" in self._data:
             std_string = "data:image/png;base64,"
             str_to_convert = self._data["plot"][
-                len(std_string): len(self._data["plot"])
+                len(std_string) : len(self._data["plot"])
             ]
             return {"image": str_to_convert}
         else:
@@ -574,7 +574,7 @@ class give_info_from_raw_data_N_and_N_1:
     def give_current_height_in_UTC(self, current_epoch_time):
         """Give current height tide in current or previous data ."""
         result = self._info.give_current_height_in_UTC(current_epoch_time)
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_current_height_in_UTC(
