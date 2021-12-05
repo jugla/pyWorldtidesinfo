@@ -1,4 +1,4 @@
-"""gather function objects thal allow to manage Word Tides Info server API V2"""
+"""gather function objects thal allow to manage Word Tides Info server API V2."""
 # python library
 # Python library
 import logging
@@ -16,7 +16,7 @@ SERVER_API_VERSION = "V2"
 
 
 class Server_Parameter:
-    """Parameter"""
+    """Manage Parameter."""
 
     def __init__(
         self,
@@ -29,6 +29,7 @@ class Server_Parameter:
         plot_background,
         unit_curve_picture,
     ):
+        """Initialisation of parameter."""
         self._version = SERVER_API_VERSION
         self._key = key
         self._lat = lat
@@ -40,7 +41,7 @@ class Server_Parameter:
         self._unit_curve_picture = unit_curve_picture
 
     def compare_parameter(self, parameter):
-        """compare the parameter given to the stored ones"""
+        """Compare the parameter given to the stored ones."""
         result = False
         try:
             if (
@@ -72,21 +73,25 @@ class Server_Parameter:
         return result
 
     def get_latitude(self):
+        """Retrieve the ref latitude."""
         return self._lat
 
     def get_longitude(self):
+        """Retrieve the ref longitude."""
         return self._lon
 
     def get_tide_station_distance(self):
+        """Retrieve the tide station distance given o fetch tide station."""
         return self._tide_station_distance
 
     def change_ref_point(self, lat, lon):
+        """Set a new reference lat/long."""
         self._lat = lat
         self._lon = lon
 
 
 class WorldTidesInfo_server:
-    """Class to manage the Word Tide Info server"""
+    """Class to manage the Word Tide Info server."""
 
     def __init__(
         self,
@@ -99,6 +104,7 @@ class WorldTidesInfo_server:
         plot_background,
         unit_curve_picture,
     ):
+        """Initialisation of parameter."""
 
         # parameter
         self._Server_Parameter = Server_Parameter(
@@ -124,25 +130,31 @@ class WorldTidesInfo_server:
         self.last_tide_request_error_value = None
 
     def change_ref_point(self, lat, lon):
+        """Change the reference point."""
         self._Server_Parameter.change_ref_point(lat, lon)
 
     def give_parameter(self):
+        """Give the parameter."""
         return self._Server_Parameter
 
     def retrieve_tide_station_credit(self):
+        """Give the last credit used (tide station)."""
         return self.last_tide_station_request_credit
 
     def retrieve_tide_station_err_value(self):
+        """Give the last error (tide station)."""
         return self.last_tide_station_request_error_value
 
     def retrieve_tide_station_raw_data(self):
+        """Give the last raw data (tide station)."""
         return self.last_tide_station_raw_data
 
     def retrieve_tide_station_request_time(self):
+        """Give the last request time (tide station)."""
         return self.last_tide_station_request_time
 
     def retrieve_tide_station(self):
-        """retrieve information related tide station only"""
+        """Retrieve information related tide station only."""
         current_time = time.time()
         data_has_been_received = False
         data = None
@@ -184,19 +196,23 @@ class WorldTidesInfo_server:
         return data_has_been_received
 
     def retrieve_tide_credit(self):
+        """Give the last credit used (tide info)."""
         return self.last_tide_request_credit
 
     def retrieve_tide_err_value(self):
+        """Give the last error (tide info)."""
         return self.last_tide_request_error_value
 
     def retrieve_tide_raw_data(self):
+        """Give the last raw data (tide info)."""
         return self.last_tide_raw_data
 
     def retrieve_tide_request_time(self):
+        """Give the last request time (tide info)."""
         return self.last_tide_request_time
 
     def retrieve_tide_height_over_one_day(self, datum_flag):
-        """retrieve information related to tide"""
+        """Retrieve information related to tide."""
         current_time = time.time()
         data_has_been_received = False
         data = None
@@ -248,13 +264,14 @@ class WorldTidesInfo_server:
 
 
 class give_info_from_raw_data:
-    """Give a set of function to decode retrieved data"""
+    """Give a set of function to decode retrieved data."""
 
     def __init__(self, data):
+        """Set data."""
         self._data = data
 
     def give_tide_in_epoch(self, current_epoch_time, next_tide_flag):
-        """give info from X seconds from epoch"""
+        """Give Tide info from X seconds from epoch."""
 
         if self._data == None:
             return {"error": "no data"}
@@ -286,14 +303,17 @@ class give_info_from_raw_data:
         return {"tide_type": tide_type, "tide_time": tide_time}
 
     def give_next_tide_in_epoch(self, current_epoch_time):
+        """Give Next Tide info from X seconds from epoch."""
         next_tide_flag = True
         return self.give_tide_in_epoch(current_epoch_time, next_tide_flag)
 
     def give_previous_tide_in_epoch(self, current_epoch_time):
+        """Give Previous Tide info from X seconds from epoch."""
         next_tide_flag = False
         return self.give_tide_in_epoch(current_epoch_time, next_tide_flag)
 
     def give_vertical_ref(self):
+        """Give Vertical Ref (LAT,...)."""
         if self._data == None:
             return {"error": "no data"}
         elif "responseDatum" in self._data:
@@ -302,6 +322,7 @@ class give_info_from_raw_data:
             return {"error": "no vertical ref"}
 
     def give_tidal_station_used(self):
+        """Give Tidal Station."""
         if self._data == None:
             return {"error": "no data"}
         elif "station" in self._data:
@@ -310,7 +331,7 @@ class give_info_from_raw_data:
             return {"error": "no reference station used"}
 
     def give_high_low_tide_in_UTC(self, current_epoch_time, next_tide_flag):
-        """give info from X seconds from epoch"""
+        """Give High/Low Tide info from X seconds from epoch."""
         if self._data == None:
             return {"error": "no data"}
 
@@ -362,15 +383,17 @@ class give_info_from_raw_data:
         }
 
     def give_next_high_low_tide_in_UTC(self, current_epoch_time):
+        """Give Next High/Low Tide info from X seconds from epoch."""
         next_tide_flag = True
         return self.give_high_low_tide_in_UTC(current_epoch_time, next_tide_flag)
 
     def give_current_high_low_tide_in_UTC(self, current_epoch_time):
+        """Give Previous High/Low Tide info from X seconds from epoch."""
         next_tide_flag = False
         return self.give_high_low_tide_in_UTC(current_epoch_time, next_tide_flag)
 
     def give_current_height_in_UTC(self, current_epoch_time):
-        """give info from X seconds from epoch"""
+        """Give current heigh at X seconds from epoch."""
         current_time = int(current_epoch_time)
 
         if self._data == None:
@@ -392,7 +415,7 @@ class give_info_from_raw_data:
         }
 
     def give_tide_prediction_within_time_frame(self, epoch_frame_min, epoch_frame_max):
-        """retrieve data from frame_min to frame_max"""
+        """Retrieve data from frame_min to frame_max."""
         if self._data == None:
             return {"error": "no data"}
 
@@ -414,12 +437,13 @@ class give_info_from_raw_data:
         }
 
     def give_station_list_info(self):
+        """Give Tide Station List."""
         if self._data == None:
             return None
         return self._data["stations"]
 
     def give_used_station_info(self):
-        """give used tidal station info"""
+        """Give used tidal station info."""
         if self._data == None:
             return {"error": "no_data"}
 
@@ -432,7 +456,7 @@ class give_info_from_raw_data:
         return {"error": "used station not found"}
 
     def give_used_station_info_from_name(self, station_name):
-        """give used tidal station info"""
+        """Give used tidal station info."""
         if station_name == None:
             return {"error": "no_station_name"}
 
@@ -461,7 +485,7 @@ class give_info_from_raw_data:
         return {"error": "used station detailed not found"}
 
     def give_station_around_info(self):
-        """give tidal station around info"""
+        """Give tidal station around info."""
         if self._data == None:
             return {"error": "no_data"}
 
@@ -484,7 +508,7 @@ class give_info_from_raw_data:
         }
 
     def give_nearest_station_time_zone(self):
-        """give the nearest tide station time zone"""
+        """Give the nearest tide station time zone."""
         if self._data == None:
             return {"error": "no_data"}
         if len(self._data["stations"]) > 0:
@@ -493,6 +517,7 @@ class give_info_from_raw_data:
             return {"error": "no station around"}
 
     def give_datum(self):
+        """Give the datum ie different heigh LAT/CD/MSL/... ."""
         if self._data == None:
             return {"error": "no data"}
         elif "datums" in self._data:
@@ -501,7 +526,7 @@ class give_info_from_raw_data:
             return {"error": "no_datums"}
 
     def give_plot_picture_without_header(self):
-        """Give picture in base 64 without the format header"""
+        """Give picture in base 64 without the format header."""
         if self._data == None:
             return {"error": "no data"}
         elif "plot" in self._data:
@@ -515,9 +540,10 @@ class give_info_from_raw_data:
 
 
 class give_info_from_raw_datums_data:
-    """Decode datum information"""
+    """Decode datum information."""
 
     def __init__(self, datums_data):
+        """Set data."""
         self._datums_data = datums_data
 
     def give_mean_water_spring_datums_offset(self):

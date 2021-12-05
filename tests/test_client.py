@@ -1,4 +1,6 @@
+"""Test package."""
 import unittest
+
 
 class WorldTidesInfoTestCase(unittest.TestCase):
     """Class used to test."""
