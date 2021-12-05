@@ -5,7 +5,7 @@ import time
 from datetime import datetime, timedelta
 
 
-from pyworltidesinfo.worldtidesinfo_server import (
+from pyworldtidesinfo.worldtidesinfo_server import (
     PLOT_CURVE_UNIT_FT,
     WorldTidesInfo_server,
     give_info_from_raw_data,
@@ -45,7 +45,7 @@ def main():
     worldtidesinfo_server = WorldTidesInfo_server(
         args.key,
         args.lat,
-        args.lon,
+        args.long,
         vertical_ref,
         server_tide_station_distance,
         plot_color,
@@ -73,8 +73,8 @@ def main():
 
         current_time = time.time()
         current_height_value = tide_info.give_current_height_in_UTC(current_time)
-        print("current height %s", current_height_value.get("current_height"))
-        print("next tide %s", next_tide_state(tide_info, current_time))
+        print("current height :", current_height_value.get("current_height"))
+        print("next tide :", next_tide_state(tide_info, current_time))
     else:
         print("no data")
         return 1
