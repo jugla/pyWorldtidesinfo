@@ -29,7 +29,7 @@ class Server_Parameter:
         plot_background,
         unit_curve_picture,
     ):
-        """Initialisation of parameter."""
+        """Initialize the parameters."""
         self._version = SERVER_API_VERSION
         self._key = key
         self._lat = lat
@@ -393,7 +393,7 @@ class give_info_from_raw_data:
         return self.give_high_low_tide_in_UTC(current_epoch_time, next_tide_flag)
 
     def give_current_height_in_UTC(self, current_epoch_time):
-        """Give current heigh at X seconds from epoch."""
+        """Give current height at X seconds from epoch."""
         current_time = int(current_epoch_time)
 
         if self._data == None:
@@ -517,7 +517,7 @@ class give_info_from_raw_data:
             return {"error": "no station around"}
 
     def give_datum(self):
-        """Give the datum ie different heigh LAT/CD/MSL/... ."""
+        """Give the datum ie different height LAT/CD/MSL/... ."""
         if self._data == None:
             return {"error": "no data"}
         elif "datums" in self._data:
