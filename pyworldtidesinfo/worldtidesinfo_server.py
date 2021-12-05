@@ -417,7 +417,6 @@ class give_info_from_raw_data:
         if self._data is None:
             return {"error": "no data"}
 
-        current_height_index = 0
         height_value = []
         height_time = []
         for height_index in range(len(self._data["heights"])):
@@ -530,7 +529,7 @@ class give_info_from_raw_data:
         elif "plot" in self._data:
             std_string = "data:image/png;base64,"
             str_to_convert = self._data["plot"][
-                len(std_string) : len(self._data["plot"])
+                len(std_string): len(self._data["plot"])
             ]
             return {"image": str_to_convert}
         else:
@@ -545,6 +544,7 @@ class give_info_from_raw_datums_data:
         self._datums_data = datums_data
 
     def give_mean_water_spring_datums_offset(self):
+        """Retrieve MWS mean water spring height ."""
         if self._datums_data is None:
             return {"error": "no data"}
         MHW_index = 0
@@ -564,13 +564,15 @@ class give_info_from_raw_datums_data:
 
 
 class give_info_from_raw_data_N_and_N_1:
-    """Give a set of function to decode info from current or previous data"""
+    """Give a set of function to decode info from current or previous data."""
 
     def __init__(self, data, previous_data):
+        """Set the flip flop data."""
         self._info = give_info_from_raw_data(data)
         self._previous_info = give_info_from_raw_data(previous_data)
 
     def give_current_height_in_UTC(self, current_epoch_time):
+        """Give current height tide in current or previous data ."""
         result = self._info.give_current_height_in_UTC(current_epoch_time)
         if result.get("error") == None:
             return result
@@ -581,6 +583,7 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_high_low_tide_in_UTC(self, current_epoch_time, next_tide_flag):
+        """Give high low tide in current or previous data ."""
         result = self._info.give_high_low_tide_in_UTC(
             current_epoch_time, next_tide_flag
         )
@@ -593,14 +596,17 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_next_high_low_tide_in_UTC(self, current_epoch_time):
+        """Give next high low tide in current or previous data ."""
         next_tide_flag = True
         return self.give_high_low_tide_in_UTC(current_epoch_time, next_tide_flag)
 
     def give_current_high_low_tide_in_UTC(self, current_epoch_time):
+        """Give previous high low tide in current or previous data ."""
         next_tide_flag = False
         return self.give_high_low_tide_in_UTC(current_epoch_time, next_tide_flag)
 
     def give_tide_in_epoch(self, current_epoch_time, next_tide_flag):
+        """Give tide in current or previous data ."""
         result = self._info.give_tide_in_epoch(current_epoch_time, next_tide_flag)
         if result.get("error") is None:
             return result
@@ -611,14 +617,17 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_next_tide_in_epoch(self, current_epoch_time):
+        """Give next tide in current or previous data ."""
         next_tide_flag = True
         return self.give_tide_in_epoch(current_epoch_time, next_tide_flag)
 
     def give_previous_tide_in_epoch(self, current_epoch_time):
+        """Give previous tide in current or previous data ."""
         next_tide_flag = False
         return self.give_tide_in_epoch(current_epoch_time, next_tide_flag)
 
     def give_vertical_ref(self):
+        """Give vertical ref in current or previous data ."""
         result = self._info.give_vertical_ref()
         if result.get("error") is None:
             return result
@@ -627,6 +636,7 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_tidal_station_used(self):
+        """Give tidal station used in current or previous data ."""
         result = self._info.give_tidal_station_used()
         if result.get("error") is None:
             return result
@@ -635,6 +645,7 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_nearest_station_time_zone(self):
+        """Give tidal station time zone in current or previous data ."""
         result = self._info.give_nearest_station_time_zone()
         if result.get("error") is None:
             return result
@@ -643,6 +654,7 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_datum(self):
+        """Give tidal datum in current or previous data ."""
         result = self._info.give_datum()
         if result.get("error") is None:
             return result
@@ -651,6 +663,7 @@ class give_info_from_raw_data_N_and_N_1:
             return previous_result
 
     def give_plot_picture_without_header(self):
+        """Give plot picture in current or previous data ."""
         result = self._info.give_plot_picture_without_header()
         if result.get("error") is None:
             return result
