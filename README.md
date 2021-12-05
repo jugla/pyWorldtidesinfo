@@ -10,6 +10,8 @@ pip install pyworldtidesinfo
 ```
 
 ## Use
+**Prerequisite** : a valid key from https://www.worldtides.info/
+
 The `__main__.py` is provided to show an example of use.
 
 - 2 mains function to connect to server :
