@@ -284,7 +284,7 @@ class give_info_from_raw_data:
                 next_tide = next_tide + 1
         if next_tide >= len(self._data["extremes"]):
             return {"error": "no date in future"}
-        if next_tide_flag == False:
+        if next_tide_flag is False:
             if self._data["extremes"][next_tide]["dt"] > current_time:
                 return {"error": "no date in past"}
 
@@ -312,7 +312,7 @@ class give_info_from_raw_data:
 
     def give_vertical_ref(self):
         """Give Vertical Ref (LAT,...)."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
         elif "responseDatum" in self._data:
             return {"vertical_ref": self._data["responseDatum"]}
@@ -321,7 +321,7 @@ class give_info_from_raw_data:
 
     def give_tidal_station_used(self):
         """Give Tidal Station."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
         elif "station" in self._data:
             return {"station": self._data["station"]}
@@ -330,7 +330,7 @@ class give_info_from_raw_data:
 
     def give_high_low_tide_in_UTC(self, current_epoch_time, next_tide_flag):
         """Give High/Low Tide info from X seconds from epoch."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
 
         current_time = int(current_epoch_time)
@@ -349,7 +349,7 @@ class give_info_from_raw_data:
         if next_tide >= len(self._data["extremes"]):
             return {"error": "no date in future"}
 
-        if next_tide_flag == False:
+        if next_tide_flag is False:
             if self._data["extremes"][next_tide]["dt"] > current_time:
                 return {"error": "no date in past"}
 
@@ -394,7 +394,7 @@ class give_info_from_raw_data:
         """Give current height at X seconds from epoch."""
         current_time = int(current_epoch_time)
 
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
 
         # The height
@@ -414,7 +414,7 @@ class give_info_from_raw_data:
 
     def give_tide_prediction_within_time_frame(self, epoch_frame_min, epoch_frame_max):
         """Retrieve data from frame_min to frame_max."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
 
         current_height_index = 0
@@ -436,13 +436,13 @@ class give_info_from_raw_data:
 
     def give_station_list_info(self):
         """Give Tide Station List."""
-        if self._data == None:
+        if self._data is None:
             return None
         return self._data["stations"]
 
     def give_used_station_info(self):
         """Give used tidal station info."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no_data"}
 
         if len(self._data["stations"]) > 0:
@@ -455,10 +455,10 @@ class give_info_from_raw_data:
 
     def give_used_station_info_from_name(self, station_name):
         """Give used tidal station info."""
-        if station_name == None:
+        if station_name is None:
             return {"error": "no_station_name"}
 
-        if self._data == None:
+        if self._data is None:
             return {"error": "no_data"}
 
         tide_station_index = 0
@@ -469,7 +469,7 @@ class give_info_from_raw_data:
                 if self._data["stations"][name_index]["name"] == station_name:
                     tide_station_index = name_index
                     tide_station_index_found = True
-        if tide_station_index_found == True:
+        if tide_station_index_found is True:
             return {
                 "tide_station_used_name": self._data["stations"][tide_station_index][
                     "name"
@@ -484,7 +484,7 @@ class give_info_from_raw_data:
 
     def give_station_around_info(self):
         """Give tidal station around info."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no_data"}
 
         station_around_nb = len(self._data["stations"])
@@ -507,7 +507,7 @@ class give_info_from_raw_data:
 
     def give_nearest_station_time_zone(self):
         """Give the nearest tide station time zone."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no_data"}
         if len(self._data["stations"]) > 0:
             return {"time_zone": self._data["stations"][0]["timezone"]}
@@ -516,7 +516,7 @@ class give_info_from_raw_data:
 
     def give_datum(self):
         """Give the datum ie different height LAT/CD/MSL/... ."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
         elif "datums" in self._data:
             return {"datums": self._data["datums"]}
@@ -525,7 +525,7 @@ class give_info_from_raw_data:
 
     def give_plot_picture_without_header(self):
         """Give picture in base 64 without the format header."""
-        if self._data == None:
+        if self._data is None:
             return {"error": "no data"}
         elif "plot" in self._data:
             std_string = "data:image/png;base64,"
@@ -545,7 +545,7 @@ class give_info_from_raw_datums_data:
         self._datums_data = datums_data
 
     def give_mean_water_spring_datums_offset(self):
-        if self._datums_data == None:
+        if self._datums_data is None:
             return {"error": "no data"}
         MHW_index = 0
         MLW_index = 0
@@ -584,7 +584,7 @@ class give_info_from_raw_data_N_and_N_1:
         result = self._info.give_high_low_tide_in_UTC(
             current_epoch_time, next_tide_flag
         )
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_high_low_tide_in_UTC(
@@ -602,7 +602,7 @@ class give_info_from_raw_data_N_and_N_1:
 
     def give_tide_in_epoch(self, current_epoch_time, next_tide_flag):
         result = self._info.give_tide_in_epoch(current_epoch_time, next_tide_flag)
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_tide_in_epoch(
@@ -620,7 +620,7 @@ class give_info_from_raw_data_N_and_N_1:
 
     def give_vertical_ref(self):
         result = self._info.give_vertical_ref()
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_vertical_ref()
@@ -628,7 +628,7 @@ class give_info_from_raw_data_N_and_N_1:
 
     def give_tidal_station_used(self):
         result = self._info.give_tidal_station_used()
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_tidal_station_used()
@@ -636,7 +636,7 @@ class give_info_from_raw_data_N_and_N_1:
 
     def give_nearest_station_time_zone(self):
         result = self._info.give_nearest_station_time_zone()
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_nearest_station_time_zone()
@@ -644,7 +644,7 @@ class give_info_from_raw_data_N_and_N_1:
 
     def give_datum(self):
         result = self._info.give_datum()
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_datum()
@@ -652,7 +652,7 @@ class give_info_from_raw_data_N_and_N_1:
 
     def give_plot_picture_without_header(self):
         result = self._info.give_plot_picture_without_header()
-        if result.get("error") == None:
+        if result.get("error") is None:
             return result
         else:
             previous_result = self._previous_info.give_plot_picture_without_header()
