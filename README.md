@@ -1,6 +1,6 @@
 # pyworldtidesinfo
 ## General
-![GitHub release](https://img.shields.io/github/release/jugla/pyWolrdtidesinfo)
+![GitHub release](https://img.shields.io/github/release/jugla/pyWorldtidesinfo)
 
 Get tide info from World Tides Info server.
 
