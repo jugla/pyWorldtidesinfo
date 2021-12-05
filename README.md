@@ -1,9 +1,10 @@
 # pyworldtidesinfo
+## General
 ![GitHub release](https://img.shields.io/github/release/jugla/pyWolrdtidesinfo)
 
 Get tide info from World Tides Info server.
 
-### Installing
+## Installing
 ```
 pip install pyworldtidesinfo
 ```
@@ -11,6 +12,12 @@ pip install pyworldtidesinfo
 ## Use
 The `__main__.py` is provided to show an example of use.
 
+- 2 mains function to connect to server :
 
+  - retrieve tide station info
+
+  - retrieve tide info (height, ...)
+
+- several function to decode the receive message from server
 
 
