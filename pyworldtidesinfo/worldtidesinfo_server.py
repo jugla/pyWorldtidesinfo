@@ -53,7 +53,8 @@ class Server_Parameter:
                 and parameter._lon == self._lon
                 and parameter._vertical_ref == self._vertical_ref
                 and parameter._tide_station_distance == self._tide_station_distance
-                and parameter._tide_prediction_duration == self._tide_prediction_duration
+                and parameter._tide_prediction_duration
+                == self._tide_prediction_duration
                 and parameter._plot_color == self._plot_color
                 and parameter._plot_background == self._plot_background
                 and parameter._unit_curve_picture == self._unit_curve_picture
@@ -226,7 +227,9 @@ class WorldTidesInfo_server:
             datums_string = "&datums"
 
         # prediction + 1 day --> to manage midnight
-        tide_prediction_total_duration = self._Server_Parameter._tide_prediction_duration
+        tide_prediction_total_duration = (
+            self._Server_Parameter._tide_prediction_duration + 1
+        )
 
         # 3 days --> to manage one day beyond midnight and one before midnight
         resource = (
