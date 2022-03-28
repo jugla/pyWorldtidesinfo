@@ -25,6 +25,7 @@ class Server_Parameter:
         lon,
         vertical_ref,
         tide_station_distance,
+        tide_prediction_duration,
         plot_color,
         plot_background,
         unit_curve_picture,
@@ -36,6 +37,7 @@ class Server_Parameter:
         self._lon = lon
         self._vertical_ref = vertical_ref
         self._tide_station_distance = tide_station_distance
+        self._tide_prediction_duration = tide_prediction_duration
         self._plot_color = plot_color
         self._plot_background = plot_background
         self._unit_curve_picture = unit_curve_picture
@@ -51,6 +53,7 @@ class Server_Parameter:
                 and parameter._lon == self._lon
                 and parameter._vertical_ref == self._vertical_ref
                 and parameter._tide_station_distance == self._tide_station_distance
+                and parameter._tide_prediction_duration == self._tide_prediction_duration
                 and parameter._plot_color == self._plot_color
                 and parameter._plot_background == self._plot_background
                 and parameter._unit_curve_picture == self._unit_curve_picture
@@ -100,6 +103,7 @@ class WorldTidesInfo_server:
         lon,
         vertical_ref,
         tide_station_distance,
+        tide_prediction_duration,
         plot_color,
         plot_background,
         unit_curve_picture,
@@ -112,6 +116,7 @@ class WorldTidesInfo_server:
             lon,
             vertical_ref,
             tide_station_distance,
+            tide_prediction_duration,
             plot_color,
             plot_background,
             unit_curve_picture,
@@ -220,11 +225,15 @@ class WorldTidesInfo_server:
         if datum_flag:
             datums_string = "&datums"
 
+        # prediction + 1 day --> to manage midnight
+        tide_prediction_total_duration = self._Server_Parameter._tide_prediction_duration
+
         # 3 days --> to manage one day beyond midnight and one before midnight
         resource = (
-            "https://www.worldtides.info/api/v2?extremes&days=3&date=today&heights&plot&timemode=24&step=900"
+            "https://www.worldtides.info/api/v2?extremes&days={}&date=today&heights&plot&timemode=24&step=900"
             "&key={}&lat={}&lon={}&datum={}&stationDistance={}&color={}&background={}&units={}{}"
         ).format(
+            tide_prediction_total_duration,
             self._Server_Parameter._key,
             self._Server_Parameter._lat,
             self._Server_Parameter._lon,
@@ -349,7 +358,11 @@ class give_info_from_raw_data:
         if next_tide >= len(self._data["extremes"]):
             return {"error": "no date in future"}
 
-        if next_tide_flag is False:
+        # As we are looking also for next one
+        if (next_tide + 1) >= len(self._data["extremes"]):
+            return {"error": "no date in future for next one"}
+
+        if not next_tide_flag:
             if self._data["extremes"][next_tide]["dt"] > current_time:
                 return {"error": "no date in past"}
 
