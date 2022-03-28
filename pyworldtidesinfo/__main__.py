@@ -41,6 +41,8 @@ def main():
     plot_color = "2,102,255"
     plot_background = "255,255,255"
     unit_curve_picture = PLOT_CURVE_UNIT_FT
+    # 1 day of prediction
+    tide_prediction_duration = 1
 
     worldtidesinfo_server = WorldTidesInfo_server(
         args.key,
@@ -48,6 +50,7 @@ def main():
         args.long,
         vertical_ref,
         server_tide_station_distance,
+        tide_prediction_duration,
         plot_color,
         plot_background,
         unit_curve_picture,
