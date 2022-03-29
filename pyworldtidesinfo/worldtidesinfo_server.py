@@ -396,6 +396,31 @@ class give_info_from_raw_data:
             "low_tide_height": low_tide_height,
         }
 
+    def give_tide_extrema_within_time_frame(self, epoch_frame_min, epoch_frame_max):
+        """Retrieve data extrema from frame_min to frame_max."""
+        if self._data is None:
+            return {"error": "no data"}
+
+        extrema_value = []
+        extrema_time = []
+        extrema_type = []
+        for extrema_index in range(len(self._data["extremes"])):
+            extrema_current_value = self._data["extremes"][extrema_index]["height"]
+            extrema_current_time = self._data["extremes"][extrema_index]["dt"]
+            extrema_current_type = self._data["extremes"][extrema_index]["type"]
+            # retrieve height and time
+            if (extrema_current_time > epoch_frame_min) and (
+                extrema_current_time < epoch_frame_max
+            ):
+                extrema_value.append(extrema_current_value)
+                extrema_time.append(extrema_current_time)
+                extrema_type.append(extrema_current_type)
+        return {
+            "extrema_value": extrema_value,
+            "extrema_epoch": extrema_time,
+            "extrema_type": extrema_type,
+        }
+
     def give_next_high_low_tide_in_UTC(self, current_epoch_time):
         """Give Next High/Low Tide info from X seconds from epoch."""
         next_tide_flag = True
