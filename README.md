@@ -2,7 +2,10 @@
 ## General
 ![GitHub release](https://img.shields.io/github/release/jugla/pyWorldtidesinfo)
 
-Get tide info from World Tides Info server.
+Get tide info from World Tides Info server :
+- Location Parameter : latitude/longitude of monitored point
+- Tide prediction parameter : reference (LAT,...), tide station distance, tide prediction duration
+- Tide picture : unit (meter/feet), plot/background color
 
 ## Installing
 ```
