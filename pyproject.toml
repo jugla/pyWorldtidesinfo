@@ -19,7 +19,7 @@ use_parentheses = true
 
 [tool.poetry]
 name = "pyworldtidesinfo"
-version = "2.1.0"
+version = "3.0.0"
 description = "A simple API for world tides info server"
 readme = "README.md"
 authors = ["jugla"]

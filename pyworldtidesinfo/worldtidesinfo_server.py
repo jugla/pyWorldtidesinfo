@@ -12,7 +12,8 @@ _LOGGER = logging.getLogger(__name__)
 # Component library
 PLOT_CURVE_UNIT_FT = "feet"
 PLOT_CURVE_UNIT_M = "meters"
-SERVER_API_VERSION = "V2"
+# This parameter is directly used in URL
+SERVER_API_VERSION = "v3"
 
 
 class Server_Parameter:
@@ -165,9 +166,10 @@ class WorldTidesInfo_server:
         data = None
 
         resource = (
-            "https://www.worldtides.info/api/v2?stations"
+            "https://www.worldtides.info/api/{}?stations"
             "&key={}&lat={}&lon={}&stationDistance={}"
         ).format(
+            self._Server_Parameter._version,
             self._Server_Parameter._key,
             self._Server_Parameter._lat,
             self._Server_Parameter._lon,
@@ -233,9 +235,10 @@ class WorldTidesInfo_server:
 
         # 3 days --> to manage one day beyond midnight and one before midnight
         resource = (
-            "https://www.worldtides.info/api/v2?extremes&days={}&date=today&heights&plot&timemode=24&step=900"
+            "https://www.worldtides.info/api/{}?extremes&days={}&date=today&heights&plot&timemode=24&step=900"
             "&key={}&lat={}&lon={}&datum={}&stationDistance={}&color={}&background={}&units={}{}"
         ).format(
+            self._Server_Parameter._version,
             tide_prediction_total_duration,
             self._Server_Parameter._key,
             self._Server_Parameter._lat,
