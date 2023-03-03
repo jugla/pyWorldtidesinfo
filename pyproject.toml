@@ -19,7 +19,7 @@ use_parentheses = true
 
 [tool.poetry]
 name = "pyworldtidesinfo"
-version = "3.0.0"
+version = "3.0.1"
 description = "A simple API for world tides info server"
 readme = "README.md"
 authors = ["jugla"]
@@ -29,16 +29,13 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
 [tool.poetry.dependencies]
 requests = "^2.22.0"
-python = ">=3.7.0,<3.11"
+python = ">=3.7.0,<3.20"
 
 [tool.poetry.dev-dependencies]
 responses = "^0.10.6"
